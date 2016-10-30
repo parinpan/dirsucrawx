@@ -27,21 +27,6 @@ class DataLoader:
         return data
 
     @staticmethod
-    def faculty(code):
-        query = "SELECT code FROM faculty WHERE code = {}".format(code)
-        return DataLoader.__fetch(query, "one")
-
-    @staticmethod
-    def department(code):
-        query = "SELECT code FROM department WHERE code = {}".format(code)
-        return DataLoader.__fetch(query, "one")
-
-    @staticmethod
-    def student(number):
-        query = "SELECT number FROM student WHERE number = {}".format(number)
-        return DataLoader.__fetch(query, "one")
-
-    @staticmethod
     def preload(my_type):
         col = "number"
         indexed_data = {}
