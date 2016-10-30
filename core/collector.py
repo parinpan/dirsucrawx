@@ -1,7 +1,7 @@
 import time
-from accessor import Accessor
+from .accessor import Accessor
 from constants import Constants
-from memorizer import Memorizer
+from database.memorizer import Memorizer
 
 """
 

@@ -1,6 +1,6 @@
-from constants import Constants
-from accessor import Accessor
 import sqlite3 as lite
+from core.accessor import Accessor
+from constants import Constants
 
 """
 
@@ -72,7 +72,7 @@ class Memorizer:
     @staticmethod
     def __save_faculty(faculty_code):
         saved = True
-        from modifier import Modifier
+        from database.modifier import Modifier
 
         data = Modifier.faculty({
             'code': int(faculty_code),
@@ -88,7 +88,7 @@ class Memorizer:
     @staticmethod
     def __save_department(conf):
         saved = True
-        from modifier import Modifier
+        from database.modifier import Modifier
 
         data = Modifier.department({
             'code': conf["department"]["prodikode"],
@@ -107,7 +107,7 @@ class Memorizer:
     def __save_student(students, department_code):
         data = None
         saved = True
-        from modifier import Modifier
+        from database.modifier import Modifier
 
         if students:
             data = Modifier.student(
