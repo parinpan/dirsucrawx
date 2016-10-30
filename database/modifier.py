@@ -1,5 +1,5 @@
-from dataloader import DataLoader
-from memorizer import Memorizer
+from .memorizer import Memorizer
+from database.dataloader import DataLoader
 
 """
 

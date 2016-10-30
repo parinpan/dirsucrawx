@@ -1,4 +1,4 @@
-from collector import Collector
+from core.collector import Collector
 
 """
 
