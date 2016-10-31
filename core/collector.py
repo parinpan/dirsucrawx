@@ -32,7 +32,7 @@ class Collector:
         convinced = False
         success = True
 
-        faculty_code = "%02d" % conf["faculty_code"]
+        faculty_code = "%02d" % int(conf["faculty_code"])
         department_code = conf["department"]["prodikode"]
 
         for student in conf["students"]:

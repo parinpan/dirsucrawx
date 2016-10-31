@@ -19,7 +19,7 @@ class Modifier(Memorizer):
     def faculty(dicts):
         data_to_insert = []
 
-        if int(dicts["code"]) in Modifier.LOADED_FACULTIES:
+        if str(dicts["code"]) in Modifier.LOADED_FACULTIES:
             query = "UPDATE faculty SET name = '{}' "
             query += "WHERE code = " + str(dicts["code"])
             Memorizer._query(query.format(dicts["name"]))
@@ -33,7 +33,7 @@ class Modifier(Memorizer):
     def department(dicts):
         data_to_insert = []
 
-        if int(dicts["code"]) in Modifier.LOADED_DEPARTMENTS:
+        if str(dicts["code"]) in Modifier.LOADED_DEPARTMENTS:
             query = "UPDATE department SET name = '{}', "
             query += "faculty_code = '{}' WHERE code = " + str(dicts["code"])
 
@@ -57,7 +57,15 @@ class Modifier(Memorizer):
         data_to_insert = []
 
         for number, student in dicts.items():
-            existed_number = int(number) in Modifier.LOADED_STUDENTS
+            existed_number = number in Modifier.LOADED_STUDENTS
+
+            for key in student.keys():
+                if student[key] is None:
+                    if key != "IPK":
+                        student[key] = ""
+
+                    else:
+                        student[key] = 0
 
             if existed_number:
                 query = "UPDATE student SET name = '{}', generation = '{}', photo = '{}', "

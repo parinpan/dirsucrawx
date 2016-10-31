@@ -1,5 +1,5 @@
 import datetime
-import sqlite3 as lite
+import MySQLdb
 
 """
 
@@ -11,11 +11,18 @@ Email       : fachrinfan@gmail.com
 
 
 class Constants:
-    DB_NAME = 'database/dirsucrawx.db'
-    DB_CONN = lite.connect(DB_NAME)
+    @staticmethod
+    def get_db_new_instance():
+        return MySQLdb.connect(
+            "localhost",  # host
+            "root",       # user
+            "",           # password
+            "dirsucrawx"  # db name
+        )
 
     MIN_GEN_TO_CRAWL = 1990
     MAX_GEN_TO_CRAWL = int(datetime.datetime.now().year)
+    DB_CONN = get_db_new_instance.__func__()
 
     GENERATION_BASE_URL = 'http://dirmahasiswa.usu.ac.id/index.php/mahasiswa/prodi/'
     DEPARTMENT_BASE_URL = 'http://dirmahasiswa.usu.ac.id/index.php/mahasiswa/getprodi/'
@@ -30,7 +37,7 @@ class Constants:
     CRAWLING_TIMEOUT_EACH_REQUEST = 15  # in seconds
 
     MAX_TRY_PER_TIMEOUT = 15
-    DELAY_ON_TIMEOUT_TRY = 2  # in seconds
+    DELAY_ON_TIMEOUT_TRY = 5  # in seconds
 
     FACULTIES_DATA = {
         1: "Fakultas Kedokteran",
@@ -76,7 +83,3 @@ class Constants:
     @staticmethod
     def get_profile_full_url(identity):
         return Constants.PROFILE_BASE_URL + str(identity)
-
-    @staticmethod
-    def get_db_new_instance():
-        return lite.connect(Constants.DB_NAME)
