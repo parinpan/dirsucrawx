@@ -1,4 +1,4 @@
-import sqlite3 as lite
+import MySQLdb
 from constants import Constants
 
 """
@@ -16,12 +16,11 @@ class DataLoader:
         data = None
 
         try:
-            Constants.DB_CONN.row_factory = lite.Row
-            cur = Constants.DB_CONN.cursor()
+            cur = Constants.DB_CONN.cursor(MySQLdb.cursors.DictCursor)
             cur.execute(query)
             data = cur.fetchone() if my_type == "one" else cur.fetchall()
 
-        except lite.Error as e:
+        except MySQLdb.Error as e:
             print(str(e))
 
         return data
@@ -41,4 +40,4 @@ class DataLoader:
         for data in all_data:
             indexed_data[data[col]] = 1
 
-        return indexed_data if indexed_data else None
+        return indexed_data

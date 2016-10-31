@@ -1,4 +1,4 @@
-import sqlite3 as lite
+import MySQLdb
 from core.accessor import Accessor
 from constants import Constants
 
@@ -17,15 +17,17 @@ class Memorizer:
         success = True
 
         try:
-            cur = Constants.DB_CONN.cursor()
+            cur = Constants.DB_CONN.cursor(MySQLdb.cursors.DictCursor)
 
             if data:
-                success = cur.executemany(query, data).rowcount > 0
+                cur.executemany(query, data)
+                success = cur.rowcount > 0
 
             else:
-                success = cur.execute(query).rowcount > 0
+                cur.execute(query)
+                success = cur.rowcount > 0
 
-        except lite.Error as e:
+        except MySQLdb.Error as e:
             success = False
             print(str(e))
 
@@ -37,7 +39,7 @@ class Memorizer:
         success = success and Memorizer.__save_department(conf)
 
         message = "All students in {}/{} were{}added to the database."
-        faculty_name = Constants.FACULTIES_DATA[int(conf["faculty_code"])]
+        faculty_name = Constants.FACULTIES_DATA[conf["faculty_code"]]
         department_name = conf["department"]["prodinamaresmi"]
 
         if success:
@@ -75,12 +77,12 @@ class Memorizer:
         from database.modifier import Modifier
 
         data = Modifier.faculty({
-            'code': int(faculty_code),
+            'code': faculty_code,
             'name': Constants.FACULTIES_DATA[faculty_code],
         })
 
         if data:
-            query = "INSERT INTO faculty VALUES(?, ?)"
+            query = "INSERT INTO faculty VALUES(%s, %s)"
             saved = Memorizer._query(query, data)
 
         return saved
@@ -98,7 +100,7 @@ class Memorizer:
         })
 
         if data:
-            query = "INSERT INTO department VALUES(?, ?, ?, ?)"
+            query = "INSERT INTO department VALUES(%s, %s, %s, %s)"
             saved = Memorizer._query(query, data)
 
         return saved
@@ -116,7 +118,7 @@ class Memorizer:
             )
 
         if data:
-            query = "INSERT INTO student VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            query = "INSERT INTO student VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
             saved = Memorizer._query(query, data)
 
         return saved
