@@ -11,7 +11,7 @@ Email       : fachrinfan@gmail.com
 
 
 class Constants:
-    DB_NAME = 'dirsucrawx.db'
+    DB_NAME = 'database/dirsucrawx.db'
     DB_CONN = lite.connect(DB_NAME)
 
     MIN_GEN_TO_CRAWL = 1990
