@@ -55,6 +55,8 @@ class Modifier(Memorizer):
     @staticmethod
     def student(dicts, department_code):
         data_to_insert = []
+
+        import MySQLdb
         from constants import Constants
 
         for number, student in dicts.items():
@@ -73,7 +75,7 @@ class Modifier(Memorizer):
                 if key == "DEPKODE":
                     student[key] = department_code
 
-                future_insert.append(student[key])
+                future_insert.append(MySQLdb.escape_string(student[key]))
                 temp_query += db_key + " = '{}',"
 
             if existed_number:

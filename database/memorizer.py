@@ -17,6 +17,7 @@ class Memorizer:
         success = True
 
         try:
+            query = MySQLdb.escape_string(query)
             cur = Constants.DB_CONN.cursor(MySQLdb.cursors.DictCursor)
 
             if data:
