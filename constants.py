@@ -33,7 +33,7 @@ class Constants:
     # higher value produces deeper crawling and slower speed
 
     MAX_FAIL_PER_GENERATION = 15  # maximum only 999
-    MAX_STUDENT_PER_GENERATION = 6  # maximum only 999
+    MAX_STUDENT_PER_GENERATION = 999  # maximum only 999
     CRAWLING_TIMEOUT_EACH_REQUEST = 15  # in seconds
 
     MAX_TRY_PER_TIMEOUT = 15
