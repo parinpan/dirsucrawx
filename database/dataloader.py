@@ -16,9 +16,7 @@ class DataLoader:
         data = None
 
         try:
-            query = MySQLdb.escape_string(query)
             cur = Constants.DB_CONN.cursor(MySQLdb.cursors.DictCursor)
-
             cur.execute(query)
             data = cur.fetchone() if my_type == "one" else cur.fetchall()
 

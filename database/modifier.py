@@ -66,7 +66,7 @@ class Modifier(Memorizer):
 
             for key, db_key in sorted(Constants.STUDENT_FIELD_MAPPING.items(), key=lambda x: x[1]):
                 if key not in student:
-                    student[key] = None
+                    student[key] = ""
 
                 if key in ["IPK", "SEMESTERSKRG", "SISASKS", "JUMLAHSAUDARASEKOLAH"] \
                         and (student[key] is None or key not in student):
@@ -75,7 +75,7 @@ class Modifier(Memorizer):
                 if key == "DEPKODE":
                     student[key] = department_code
 
-                future_insert.append(MySQLdb.escape_string(student[key]))
+                future_insert.append(student[key])
                 temp_query += db_key + " = '{}',"
 
             if existed_number:
