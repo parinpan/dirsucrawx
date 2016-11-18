@@ -118,7 +118,9 @@ class Memorizer:
             )
 
         if data:
-            query = "INSERT INTO student VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            query = "INSERT INTO student(" + Constants.STUDENT_FIELD_STR + ") "
+            query += "VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, "
+            query += "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             saved = Memorizer._query(query, data)
 
         return saved

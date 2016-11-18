@@ -20,7 +20,7 @@ class Constants:
             "dirsucrawx"  # db name
         )
 
-    MIN_GEN_TO_CRAWL = 1990
+    MIN_GEN_TO_CRAWL = 2016
     MAX_GEN_TO_CRAWL = int(datetime.datetime.now().year)
     DB_CONN = get_db_new_instance.__func__()
 
@@ -33,7 +33,7 @@ class Constants:
     # higher value produces deeper crawling and slower speed
 
     MAX_FAIL_PER_GENERATION = 15  # maximum only 999
-    MAX_STUDENT_PER_GENERATION = 999  # maximum only 999
+    MAX_STUDENT_PER_GENERATION = 4  # maximum only 999
     CRAWLING_TIMEOUT_EACH_REQUEST = 15  # in seconds
 
     MAX_TRY_PER_TIMEOUT = 15
@@ -60,6 +60,37 @@ class Constants:
         24: "Profesi Ners",
         25: "Apoteker"
     }
+
+    STUDENT_FIELD_MAPPING = {
+        'NIM': 'number',
+        'NAMA': 'name',
+        'FOTO': 'photo',
+        'ANGKATAN': 'generation',
+        'SEMTERDAFTAR': 'registered_semester',
+        'STATUSAKTIF': 'active_status',
+        'IPK': 'gpa',
+        'email': 'email',
+        'DEPKODE': 'department_code',
+        'AGAMA': 'religion',
+        'ALAMATMEDAN': 'medan_address',
+        'ALAMATMHS': 'address',
+        'ALAMATORTU': 'parent_address',
+        'ALAMATTERAKHIR': 'last_address',
+        'IBU': 'mom',
+        'AYAH': 'dad',
+        'GOLDARAH': 'blood_type',
+        'IS_REGULER': 'is_regular',
+        'JENJANG': 'education_level',
+        'SEMESTERSKRG': 'current_semester',
+        'SISASKS': 'left_sks',
+        'SUMBERDANAKULIAH': 'funding_source',
+        'TMPATTGLLAHIR': 'birth_info',
+        'JENISKELAMIN': 'gender',
+        'JUMLAHSAUDARASEKOLAH': 'siblings_total_sc',
+        'NOTELPHP': 'phone'
+    }
+
+    STUDENT_FIELD_STR = ",".join(sorted(STUDENT_FIELD_MAPPING.values()))
 
     DEFAULT_REQUEST_HEADERS = {
         'Connection': 'keep-alive',

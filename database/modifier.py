@@ -56,37 +56,34 @@ class Modifier(Memorizer):
     def student(dicts, department_code):
         data_to_insert = []
 
+        import MySQLdb
+        from constants import Constants
+
         for number, student in dicts.items():
+            temp_query = ""
+            future_insert = []
             existed_number = number in Modifier.LOADED_STUDENTS
 
-            for key in student.keys():
-                if student[key] is None:
-                    if key != "IPK":
-                        student[key] = ""
+            for key, db_key in sorted(Constants.STUDENT_FIELD_MAPPING.items(), key=lambda x: x[1]):
+                if key not in student:
+                    student[key] = ""
 
-                    else:
-                        student[key] = 0
+                if key in ["IPK", "SEMESTERSKRG", "SISASKS", "JUMLAHSAUDARASEKOLAH"] \
+                        and (student[key] is None or key not in student):
+                    student[key] = 0
+
+                if key == "DEPKODE":
+                    student[key] = department_code
+
+                future_insert.append(student[key])
+                temp_query += db_key + " = '{}',"
 
             if existed_number:
-                query = "UPDATE student SET name = '{}', generation = '{}', photo = '{}', "
-                query += "registered_semester = '{}', active_status = '{}', gpa = '{}',  "
-                query += "email = '{}', department_code = '{}' WHERE number = " + str(number)
-
-                Modifier._query(
-                    query.format(
-                        student["NAMA"], student["ANGKATAN"],
-                        student["FOTO"], student["SEMTERDAFTAR"],
-                        student["STATUSAKTIF"], student["IPK"],
-                        student["EMAIL"], department_code
-                    )
-                )
+                query = "UPDATE student SET [statement] WHERE number = " + str(number)
+                query = query.replace('[statement]', temp_query.rstrip(','))
+                Modifier._query(query.format(*future_insert))
 
             if not existed_number:
-                data_to_insert.append((
-                    student["NIM"], student["NAMA"],
-                    student["ANGKATAN"], student["FOTO"],
-                    student["SEMTERDAFTAR"], student["STATUSAKTIF"],
-                    student["IPK"], student["EMAIL"], department_code
-                ))
+                data_to_insert.append(tuple(future_insert))
 
         return data_to_insert
