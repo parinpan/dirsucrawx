@@ -55,8 +55,6 @@ class Modifier(Memorizer):
     @staticmethod
     def student(dicts, department_code):
         data_to_insert = []
-
-        import MySQLdb
         from constants import Constants
 
         for number, student in dicts.items():
@@ -65,6 +63,8 @@ class Modifier(Memorizer):
             existed_number = number in Modifier.LOADED_STUDENTS
 
             for key, db_key in sorted(Constants.STUDENT_FIELD_MAPPING.items(), key=lambda x: x[1]):
+                key = key.upper()
+
                 if key not in student:
                     student[key] = ""
 

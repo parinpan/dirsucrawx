@@ -69,7 +69,7 @@ class Constants:
         'SEMTERDAFTAR': 'registered_semester',
         'STATUSAKTIF': 'active_status',
         'IPK': 'gpa',
-        'email': 'email',
+        'EMAIL': 'email',
         'DEPKODE': 'department_code',
         'AGAMA': 'religion',
         'ALAMATMEDAN': 'medan_address',
