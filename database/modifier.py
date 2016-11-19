@@ -68,13 +68,6 @@ class Modifier(Memorizer):
                 if key not in student:
                     student[key] = ""
 
-                elif key in student:
-                    if student[key] is not None:
-                        student[key] = ""
-
-                    else:
-                        temp_query += db_key + " = '{}',"
-
                 if key in ["IPK", "SEMESTERSKRG", "SISASKS", "JUMLAHSAUDARASEKOLAH"] \
                         and (student[key] is None or key not in student):
                     student[key] = 0
@@ -83,6 +76,7 @@ class Modifier(Memorizer):
                     student[key] = department_code
 
                 future_insert.append(student[key])
+                temp_query += db_key + " = '{}',"
 
             if existed_number:
                 query = "UPDATE student SET [statement] WHERE number = " + str(number)
