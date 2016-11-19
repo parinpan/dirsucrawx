@@ -68,6 +68,9 @@ class Modifier(Memorizer):
                 if key not in student:
                     student[key] = ""
 
+                elif key in student and student[key] is None:
+                    student[key] = ""
+
                 if key in ["IPK", "SEMESTERSKRG", "SISASKS", "JUMLAHSAUDARASEKOLAH"] \
                         and (student[key] is None or key not in student):
                     student[key] = 0
