@@ -20,7 +20,7 @@ class Constants:
             "dirsucrawx"  # db name
         )
 
-    MIN_GEN_TO_CRAWL = 2016
+    MIN_GEN_TO_CRAWL = 1980
     MAX_GEN_TO_CRAWL = int(datetime.datetime.now().year)
     DB_CONN = get_db_new_instance.__func__()
 
@@ -32,12 +32,12 @@ class Constants:
     # ATTENTION
     # higher value produces deeper crawling and slower speed
 
-    MAX_FAIL_PER_GENERATION = 15  # maximum only 999
-    MAX_STUDENT_PER_GENERATION = 4  # maximum only 999
-    CRAWLING_TIMEOUT_EACH_REQUEST = 15  # in seconds
+    MAX_FAIL_PER_GENERATION = 999  # maximum only 999
+    MAX_STUDENT_PER_GENERATION = 999  # maximum only 999
+    CRAWLING_TIMEOUT_EACH_REQUEST = 30  # in seconds
 
-    MAX_TRY_PER_TIMEOUT = 15
-    DELAY_ON_TIMEOUT_TRY = 5  # in seconds
+    MAX_TRY_PER_TIMEOUT = 30
+    DELAY_ON_TIMEOUT_TRY = 10  # in seconds
 
     FACULTIES_DATA = {
         1: "Fakultas Kedokteran",
