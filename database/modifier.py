@@ -71,7 +71,7 @@ class Modifier(Memorizer):
                     student[key] = ""
 
                 elif key in student:
-                    if student[key] is None:
+                    if student[key] is None or student[key] == "" or len(student[key]) == 0:
                         student[key] = ""
 
                     else:
