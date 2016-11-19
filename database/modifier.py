@@ -58,8 +58,10 @@ class Modifier(Memorizer):
         from constants import Constants
 
         for number, student in dicts.items():
-            temp_query = ""
+            future_update = []
             future_insert = []
+
+            temp_query = ""
             existed_number = number in Modifier.LOADED_STUDENTS
 
             for key, db_key in sorted(Constants.STUDENT_FIELD_MAPPING.items(), key=lambda x: x[1]):
@@ -74,6 +76,7 @@ class Modifier(Memorizer):
 
                     else:
                         temp_query += db_key + " = '{}',"
+                        future_update.append(student[key])
 
                 if key in ["IPK", "SEMESTERSKRG", "SISASKS", "JUMLAHSAUDARASEKOLAH"] \
                         and (student[key] is None or key not in student):
@@ -87,7 +90,7 @@ class Modifier(Memorizer):
             if existed_number:
                 query = "UPDATE student SET [statement] WHERE number = " + str(number)
                 query = query.replace('[statement]', temp_query.rstrip(','))
-                Modifier._query(query.format(*future_insert))
+                Modifier._query(query.format(*future_update))
 
             if not existed_number:
                 data_to_insert.append(tuple(future_insert))
