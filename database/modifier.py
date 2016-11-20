@@ -55,18 +55,28 @@ class Modifier(Memorizer):
     @staticmethod
     def student(dicts, department_code):
         data_to_insert = []
-
-        import MySQLdb
         from constants import Constants
 
         for number, student in dicts.items():
-            temp_query = ""
+            future_update = []
             future_insert = []
+
+            temp_query = ""
             existed_number = number in Modifier.LOADED_STUDENTS
 
             for key, db_key in sorted(Constants.STUDENT_FIELD_MAPPING.items(), key=lambda x: x[1]):
+                key = key.upper()
+
                 if key not in student:
                     student[key] = ""
+
+                elif key in student:
+                    if student[key] is None or student[key] == "" or len(student[key]) == 0:
+                        student[key] = ""
+
+                    else:
+                        temp_query += db_key + " = '{}',"
+                        future_update.append(student[key])
 
                 if key in ["IPK", "SEMESTERSKRG", "SISASKS", "JUMLAHSAUDARASEKOLAH"] \
                         and (student[key] is None or key not in student):
@@ -76,12 +86,11 @@ class Modifier(Memorizer):
                     student[key] = department_code
 
                 future_insert.append(student[key])
-                temp_query += db_key + " = '{}',"
 
             if existed_number:
                 query = "UPDATE student SET [statement] WHERE number = " + str(number)
                 query = query.replace('[statement]', temp_query.rstrip(','))
-                Modifier._query(query.format(*future_insert))
+                Modifier._query(query.format(*future_update))
 
             if not existed_number:
                 data_to_insert.append(tuple(future_insert))
